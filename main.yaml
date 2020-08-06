@@ -1,0 +1,20 @@
+name: kpt
+on:
+    push:
+        branches:
+          - master
+jobs:
+    Kpt:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v2
+
+          - name: Run all kpt functions
+            uses: docker://gcr.io/kpt-dev/kpt:latest
+            with:
+                args: fn run example-package
+
+          - name: Show diff
+            uses: docker://alpine/git
+            with:
+                args: diff
